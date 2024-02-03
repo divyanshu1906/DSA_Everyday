@@ -1,0 +1,12 @@
+#include<vector>
+
+int getSingleElement(vector<int> &arr){
+	// Write your code here.	
+	int xor1 = 0;
+	int n = arr.size();
+	for(int i=0; i<n; i++)
+	{
+		xor1 = arr[i] ^ xor1;
+	}
+	return xor1;
+}
