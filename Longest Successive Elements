@@ -1,0 +1,21 @@
+int longestSuccessiveElements(vector<int>&a) {
+    // Write your code here.
+    unordered_set<int> ans;
+    int longest = 1;
+    int n = a.size();
+    for(int i=0; i<n; i++){
+        ans.insert(a[i]);
+    }
+    for(auto it : ans){
+        if(ans.find(it-1) == ans.end()){
+            int count = 1;
+            int x = it;
+            while(ans.find(x+1) != ans.end()){
+                x=x+1;
+                count++;
+            }
+            longest = max(longest, count);
+        }
+    }
+    return longest;
+}
