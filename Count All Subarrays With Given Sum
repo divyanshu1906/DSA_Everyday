@@ -1,0 +1,13 @@
+int findAllSubarraysWithGivenSum(vector < int > & arr, int k) {
+    // Write Your Code Here
+    map<int, int> mpp;
+    int sum=0, count=0;
+    mpp[0] = 1;
+    for(int i=0; i<arr.size(); i++){
+        sum+=arr[i];
+        int result = sum-k;
+        count+=mpp[result];
+        mpp[sum] +=1;
+    }
+    return count;
+}
