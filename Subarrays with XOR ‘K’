@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+
+int subarraysWithSumK(vector < int > a, int b) {
+    // Write your code here
+    int xo=0;
+    int count=0;
+    map<int, int> mpp;
+    mpp[xo]++ ;
+    for(int i=0; i< a.size(); i++){
+        xo = xo ^ a[i];
+        int target = xo ^ b;
+        count += mpp[target];
+        mpp[xo]++;
+    }
+    return count;
+}
