@@ -1,0 +1,17 @@
+vector<int> findMissingRepeatingNumbers(vector < int > a) {
+    // Write your code here
+    int n = a.size();
+    int sn=0, s=0, s2=0, sn2=0;
+    for(int i=0; i<n; i++){
+        s += a[i];
+        sn += i+1;
+        s2 += a[i]*a[i];
+        sn2 += (i+1) * (i+1);
+    }
+    int val1 = s-sn; // x-y
+    int val2 = s2-sn2;
+    val2 = val2 / val1;  // x+y
+    int x = (val1+val2)/2;
+    int y = x-val1;
+    return {x, y};
+}
