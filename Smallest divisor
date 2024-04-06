@@ -1,0 +1,33 @@
+double fun(vector<int> &arr, int mid, int limit){
+	int n = arr.size();
+	int ans = 0;
+	for(int i=0; i<n; i++){
+		ans += ceil((double)arr[i]/(double)mid);
+	}
+	return ans;
+}
+
+int smallestDivisor(vector<int>& arr, int limit)
+{
+	// Write your code here.
+	int n = arr.size();
+	int maxi = INT_MIN, mini  = INT_MAX;
+	int ans = -1;
+	for(int i=0; i<n; i++){
+		maxi = max(maxi, arr[i]);
+		mini = min(mini, arr[i]);
+	}
+	int low = mini, high = maxi;
+	while(low<=high){
+		int mid = low + (high - low)/2;
+		double result = fun(arr, mid, limit);
+		if(result <= limit){
+			ans = mid;
+			high = mid-1;
+		}
+		else{
+			low = mid+1;
+		}
+	}
+	return ans;
+}
