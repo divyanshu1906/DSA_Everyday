@@ -7,7 +7,7 @@ public:
         while(r<n){
             hash[s[r]-'A']++;
             maxFre = max(maxFre, hash[s[r]-'A']);
-            while((r-l+1)-maxFre > k){
+            if((r-l+1)-maxFre > k){
                 hash[s[l]-'A']--;
                 l++;
             }
