@@ -1,18 +1,16 @@
 class Solution {
 public:
-    int memoization(int n, vector<int>&dp){
-        if(n==0)return 1;
-        if(dp[n] != -1) return dp[n];
-
-        int oneStep = memoization(n-1, dp);
-        int twoStep = 0;
-        if(n-2>=0){
-            twoStep = memoization(n-2, dp);
-        }
-        return dp[n] = oneStep + twoStep;
-    }
     int climbStairs(int n) {
-        vector<int>dp(n+1, -1);
-        return memoization(n, dp);
+        vector<int>dp(n+1, 0);
+        dp[0] = 1;
+        for(int i=1; i<=n; i++){
+            int oneStep = dp[i-1];
+            int twoStep = 0;
+            if(i-2>=0){
+                twoStep = dp[i-2];
+            }
+            dp[i] = oneStep+twoStep;
+        }
+        return dp[n];
     }
 };
