@@ -8,7 +8,7 @@ public:
         for(int i=0; i<n; i++){
             int ball = queries[i][0];
             int color = queries[i][1];
-            if(ballMap.find(ball) != ballMap.end()){
+            if(ballMap.count(ball)){
                 int prevColor = ballMap[ball];
                 colorMap[prevColor]--;
                 if(colorMap[prevColor]==0){
