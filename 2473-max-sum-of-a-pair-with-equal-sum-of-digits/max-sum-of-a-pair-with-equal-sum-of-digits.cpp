@@ -3,7 +3,6 @@ public:
     int maximumSum(vector<int>& nums) {
         int maxSum = -1;
         unordered_map<int, vector<int>> mpp;
-
         for (int num : nums) {
             int sum = 0, temp = num;
             while (temp > 0) {
