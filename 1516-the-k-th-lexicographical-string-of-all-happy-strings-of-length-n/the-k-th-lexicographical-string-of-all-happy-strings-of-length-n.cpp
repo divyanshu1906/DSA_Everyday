@@ -1,20 +1,20 @@
 class Solution {
 public:
-    void generatingLexicographicalString(int n, vector<string>&lexicographicalString, vector<char> &character, string &str ){
+    void generatingLexicographicalString(int n, vector<string>&lexicographicalString, string &str ){
         if(str.size()==n){
             lexicographicalString.push_back(str);
             return;
         } 
-        for(int i=0; i<character.size(); i++){
+        for(char ch='a'; ch<='c'; ch++){
             if(str.empty()){
-                str += character[i];
-                generatingLexicographicalString(n, lexicographicalString, character, str);
+                str += ch;
+                generatingLexicographicalString(n, lexicographicalString, str);
                 str.pop_back();
             }
             else{
-                if(character[i] != str.back()){
-                    str += character[i];
-                    generatingLexicographicalString(n, lexicographicalString, character, str);
+                if(ch != str.back()){
+                    str += ch;
+                    generatingLexicographicalString(n, lexicographicalString, str);
                     str.pop_back();
                 }
             }
@@ -22,9 +22,8 @@ public:
     }
     string getHappyString(int n, int k) {
         vector<string>lexicographicalString;
-        vector<char> character = {'a', 'b', 'c'};
         string str = "";
-        generatingLexicographicalString(n, lexicographicalString, character, str);
+        generatingLexicographicalString(n, lexicographicalString, str);
         return k > lexicographicalString.size() ? "" : lexicographicalString[k-1];
     }
 };
