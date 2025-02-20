@@ -11,7 +11,7 @@ public:
             while(mpp[ch]>1){
                 mpp[s[i]]--;
                 if(mpp[s[i]]==0) mpp.erase(s[i]);
-                    i++;
+                i++;
             }
             ans = max(ans, j-i+1);
         } 
