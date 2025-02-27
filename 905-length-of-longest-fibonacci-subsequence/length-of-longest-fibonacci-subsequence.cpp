@@ -1,5 +1,13 @@
 class Solution {
 public:
+    int solve(int i, int j, vector<int>&arr, unordered_map<int, int>&mpp){
+        int sum = arr[j] - arr[i];
+        if(mpp.count(sum) && mpp[sum] < i){
+            int k = mpp[sum];
+            return 1 + solve(k, i, arr, mpp);
+        }
+        return 2;
+    }
     int lenLongestFibSubseq(vector<int>& arr) {
         int n = arr.size();
         unordered_map<int, int>mpp;
@@ -7,21 +15,14 @@ public:
             mpp[arr[i]] = i;
         }
         int maxLen = 0;
-        for(int i=0; i<n; i++){
+        for(int i=1; i<n; i++){
             for(int j=i+1; j<n; j++){
-                int a = arr[i], b = arr[j];
-                int len = 2;
-                while(mpp.find(a+b) != mpp.end()){
-                    int temp = a+b;
-                    a = b;
-                    b = temp;
-                    len++;
-                }
-                if(len>2){
-                    maxLen = max(maxLen, len);
+                int length = solve(i, j, arr, mpp);
+                if(length>2){
+                    maxLen = max(maxLen, length);
                 }
             }
         }
-        return maxLen>2 ? maxLen : 0;
+        return maxLen;
     }
 };
