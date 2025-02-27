@@ -11,20 +11,24 @@ public:
     }
     int lenLongestFibSubseq(vector<int>& arr) {
         int n = arr.size();
-        vector<vector<int>>dp(n,vector<int>(n, -1));
+        vector<vector<int>>dp(n,vector<int>(n, 2));
+
         unordered_map<int, int>mpp;
         for(int i=0; i<n; i++){
             mpp[arr[i]] = i;
         }
+
         int maxLen = 0;
         for(int i=1; i<n; i++){
             for(int j=i+1; j<n; j++){
-                int length = solve(i, j, arr, mpp, dp);
-                if(length>2){
-                    maxLen = max(maxLen, length);
+                int sum = arr[j] - arr[i];
+                if(mpp.count(sum) && mpp[sum] < i){
+                    int k = mpp[sum];
+                    dp[i][j] = 1 + dp[k][i];
                 }
+                maxLen = max(maxLen, dp[i][j]);
             }
         }
-        return maxLen;
+        return maxLen>2?maxLen : 0;
     }
 };
