@@ -13,24 +13,19 @@ public:
         int maxConti1 = 1, maxConti2=1;
 
         for(int i=1; i<hSize; i++){
-            if(hBars[i-1] + 1 != hBars[i]){
-                
-                continuous1 = 1;
-            }
-            else continuous1++;
+            (hBars[i-1] + 1 != hBars[i] ? continuous1 = 1 : continuous1++);
+            
             maxConti1 = max(maxConti1, continuous1);
         }
 
         for(int i=1; i<vSize; i++){
-            if(vBars[i-1] + 1 != vBars[i]){
-                continuous2 = 1;
-            }
-            else continuous2++;
+            (vBars[i-1] + 1 != vBars[i] ? continuous2 = 1 : continuous2++);
+
             maxConti2 = max(maxConti2, continuous2);
         }
 
-        int ans = min(maxConti2 + 1, maxConti1 + 1);
+        int side = min(maxConti2, maxConti1) + 1;
 
-        return ans * ans;
+        return side * side;
     }
 };
