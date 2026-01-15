@@ -1,26 +1,28 @@
 class Solution {
 public:
-    int findinMinJump(int idx, vector<int>& nums, vector<int>&dp){
-        if(idx >= nums.size()) return 0;
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        int prevJumpMax = nums[0];
 
-        if(dp[idx] != -1) return dp[idx];
-        int jump = nums[idx] + idx+1;
+        if(n==1) return 0;
 
-        if(jump >= nums.size()) return dp[idx] = 1;
-        
-        int minJump = 1e9+7;
+        if(prevJumpMax >= n-1) return 1;
 
-        for(int i=idx+1; i<jump; i++){
-            minJump = min(minJump, 1 + findinMinJump(i, nums, dp));
+        int jump = 1;
+        int currJumpMax = 0;
+
+        for(int i=1; i<n; i++){
+            currJumpMax = max(currJumpMax, nums[i]+i);
+
+            if(currJumpMax >= n-1) return jump+1;
+
+            if(i == prevJumpMax){
+                prevJumpMax = currJumpMax;
+                jump++;
+                currJumpMax = 0;
+            }
         }
 
-        return dp[idx] = minJump;
+        return 0;
     }
-    int jump(vector<int>& nums) {
-        if(nums.size() == 1) return 0;
-
-        vector<int>dp(nums.size(), -1);
-
-        return findinMinJump(0, nums, dp);
-    }   
 };
