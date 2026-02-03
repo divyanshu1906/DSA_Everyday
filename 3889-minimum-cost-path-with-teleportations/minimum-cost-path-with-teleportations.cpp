@@ -1,51 +1,49 @@
 class Solution {
 public:
     int minCost(vector<vector<int>>& grid, int k) {
-        int m = grid.size(), n = grid[0].size();
-        vector<pair<int, int>> points;
-        
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                points.push_back({i, j});
+        int n = grid.size();
+        int m = grid[0].size();
+
+        int maxEle = INT_MIN;
+        for (const auto& row : grid) {
+            maxEle = max(maxEle, *max_element(row.begin(), row.end()));
+        }
+
+        vector<int>teleportation(maxEle+1, INT_MAX);
+
+        vector<vector<int>>dp(n, vector<int>(m, INT_MAX));
+        dp[n-1][m-1] = 0;
+
+        for(int tel = 0; tel<=k; tel++){
+            
+            for(int i=n-1; i>=0; i--){
+                for(int j=m-1; j>=0; j--){
+
+                    if(j+1 < m){
+                        dp[i][j] = min(dp[i][j], grid[i][j+1] + dp[i][j+1]);
+                    }
+
+                    if(i+1 < n){
+                        dp[i][j] = min(dp[i][j], grid[i+1][j] + dp[i+1][j]);
+                    }
+
+                    if(tel > 0){
+                        dp[i][j] = min(dp[i][j], teleportation[grid[i][j]]);
+                    }
+                }
+            }
+
+            for(int p=0; p<n; p++){
+                for(int q=0; q<m; q++){
+                    teleportation[grid[p][q]] = min(teleportation[grid[p][q]], dp[p][q]);
+                }
+            }
+
+            for(int p=1; p<teleportation.size(); p++){
+                teleportation[p] = min(teleportation[p], teleportation[p-1]);
             }
         }
-        sort(points.begin(), points.end(),
-             [&](const auto& p1, const auto& p2) -> bool {
-                 return grid[p1.first][p1.second] < grid[p2.first][p2.second];
-             });
-        vector<vector<int>> costs(m, vector<int>(n, INT_MAX));
-        for (int t = 0; t <= k; t++) {
-            int minCost = INT_MAX;
-            for (int i = 0, j = 0; i < points.size(); i++) {
-                minCost =
-                    min(minCost, costs[points[i].first][points[i].second]);
-                if (i + 1 < points.size() &&
-                    grid[points[i].first][points[i].second] ==
-                        grid[points[i + 1].first][points[i + 1].second]) {
-                    continue;
-                }
-                for (int r = j; r <= i; r++) {
-                    costs[points[r].first][points[r].second] = minCost;
-                }
-                j = i + 1;
-            }
-            for (int i = m - 1; i >= 0; i--) {
-                for (int j = n - 1; j >= 0; j--) {
-                    if (i == m - 1 && j == n - 1) {
-                        costs[i][j] = 0;
-                        continue;
-                    }
-                    if (i != m - 1) {
-                        costs[i][j] =
-                            min(costs[i][j], costs[i + 1][j] + grid[i + 1][j]);
-                    }
-                    if (j != n - 1) {
-                        costs[i][j] =
-                            min(costs[i][j], costs[i][j + 1] + grid[i][j + 1]);
-                    }
-                }
-            }
-        }
-        return costs[0][0];
+
+        return dp[0][0];
     }
 };
