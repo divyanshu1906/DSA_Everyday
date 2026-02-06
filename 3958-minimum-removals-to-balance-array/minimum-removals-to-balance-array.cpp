@@ -5,18 +5,19 @@ public:
 
         sort(nums.begin(), nums.end());
 
-        int ans = INT_MAX;
+        int maxKeep = 0;
+
+        int j = 0;
 
         for(int i=0; i<n; i++){
-            long long val = (long long)nums[i] * k;
+            
+            while(j<n && (long long)nums[j] <= (long long)nums[i] * k){
+                j++;
+            }
 
-            int nextGreater = upper_bound(nums.begin(), nums.end(), val) - nums.begin();
-
-            ans = min(ans, (n - nextGreater + i));
-
-            if(nextGreater == n) break;
+            maxKeep = max(maxKeep, j-i);
         }
 
-        return ans;
+        return n - maxKeep;
     }
 };
