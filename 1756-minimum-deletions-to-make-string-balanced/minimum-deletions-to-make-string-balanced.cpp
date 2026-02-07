@@ -3,24 +3,18 @@ public:
     int minimumDeletions(string s) {
         int n = s.size();
 
-        int nextA = 0;
-        int result = INT_MAX;
-        int pastB = 0;
+        stack<char>st;
 
-        for(int i=n-1; i>=0; i--){
-            if(s[i] == 'a'){
-                nextA++;
-            }
-        }
+        int deleteCount = 0;
 
         for(int i=0; i<n; i++){
-            if(s[i] == 'a') nextA--;
-
-            result = min(result, nextA+pastB);
-
-            if(s[i] == 'b') pastB++;
+            if(!st.empty() && st.top() == 'b' && s[i] == 'a'){
+                st.pop();
+                deleteCount++;
+            }
+            else st.push(s[i]);
         }
 
-        return result;
+        return deleteCount;
     }
 };
