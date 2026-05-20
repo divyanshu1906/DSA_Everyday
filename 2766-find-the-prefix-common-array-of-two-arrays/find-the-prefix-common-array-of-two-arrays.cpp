@@ -6,19 +6,15 @@ public:
 
         unordered_map<int, int>mpp;
 
+        int common = 0;
+
         for(int i=0; i<n; i++){
-            mpp[A[i]]++;
-            mpp[B[i]]++;
 
-            int count = 0;
+            if(++mpp[A[i]] == 2) common++;
+            
+            if(++mpp[B[i]] == 2) common++;
 
-            for(auto &[ele, num] : mpp){
-                if(num==2){
-                    count++;
-                }
-            }
-
-            ans[i] = count;
+            ans[i] = common;
         }
 
         return ans;
