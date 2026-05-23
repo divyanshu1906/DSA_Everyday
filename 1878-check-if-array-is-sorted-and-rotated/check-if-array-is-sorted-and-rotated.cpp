@@ -2,21 +2,12 @@ class Solution {
 public:
     bool check(vector<int>& nums) {
         int n = nums.size();
-        int smallestElement = INT_MAX;
-        int idx = -1;
-        vector<int>ans = nums;
-        sort(ans.begin(), ans.end());
-        int l=0, r=0;
-        while((r<n)){
-            if(l>=2*n) return false;
-            if(nums[l%n] == ans[r]){
-                l++;
-                r++;
-            }
-            else{
-                l++, r=0;
-            }
+        int count = 0;
+        for(int i=1; i<n; i++){
+            if(nums[i-1] > nums[i]) count++;
         }
-        return r==n?true:false;
+        if(nums[n-1] > nums[0])count++;
+
+        return count <= 1;
     }
 };
